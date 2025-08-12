@@ -56,6 +56,15 @@ input:focus-visible {
   width: 400px;
 }
 
+.repo-card,
+.language {
+  transition: all 0.3s ease-in-out;
+}
+.repo-card:hover,
+.language:hover {
+  background-color: rgba(36, 36, 36, 0.6);
+}
+
 .lets-icons--view-light {
   display: inline-block;
   width: 24px;

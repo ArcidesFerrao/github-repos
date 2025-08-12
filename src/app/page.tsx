@@ -1,6 +1,8 @@
 "use client";
 import { RepoCard } from "@/components/Card";
-import { SearchBar } from "@/components/SearchBar";
+import { TopLanguages } from "@/components/TopLanguages";
+// import { SearchBar } from "@/components/SearchBar";
+import { useSearch } from "@/context/SearchContext";
 import { useEffect, useState } from "react";
 type LanguageStat = {
   language: string;
@@ -19,8 +21,9 @@ type Repo = {
 };
 
 export default function Home() {
+  const { search } = useSearch();
   const [repos, setRepos] = useState<Repo[]>([]);
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
   const [topLanguages, setTopLanguages] = useState<LanguageStat[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,9 +47,9 @@ export default function Home() {
   );
 
   return (
-    <main className="font-sans flex gap-4 justify-around ">
+    <main className="font-sans flex gap-4 justify-evenly">
       <div className="flex flex-col items-center gap-5 p-4">
-        <SearchBar search={search} setSearch={setSearch} />
+        {/* <SearchBar search={search} setSearch={setSearch} /> */}
         <h1>Most Liked Repos List</h1>
         {loading ? (
           <p className="text-gray-500">Loading...</p>
@@ -60,19 +63,21 @@ export default function Home() {
           </div>
         )}
       </div>
-      <aside className="w-1/4 max-h-fit p-4 mt-10 border rounded-sm border-gray-500">
+      <aside className="w-3xs max-h-fit p-4 mt-20 border rounded-sm border-gray-500">
         <h2>Top 10 Languages</h2>
-        <ul className="p-2">
-          {topLanguages.map((lang) => (
-            <li
-              key={lang.language}
-              className="flex justify-between text-sm text-gray-400 py-1"
-            >
-              <span>{lang.language}</span>
-              <span>{lang.count}</span>
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <p className="text-gray-500 text-center py-2">Loading languages...</p>
+        ) : (
+          <ul className="p-2">
+            {topLanguages.map((lang) => (
+              <TopLanguages
+                key={lang.language}
+                language={lang.language}
+                count={lang.count}
+              />
+            ))}
+          </ul>
+        )}
       </aside>
     </main>
   );

@@ -1,12 +1,14 @@
 "use client";
+import { useSearch } from "@/context/SearchContext";
 import React from "react";
 
-type SearchBarProps = {
-  search: string;
-  setSearch: (search: string) => void;
-};
+// type SearchBarProps = {
+//   search: string;
+//   setSearch: (search: string) => void;
+// };
 
-export const SearchBar = ({ search, setSearch }: SearchBarProps) => {
+export const SearchBar = () => {
+  const { search, setSearch } = useSearch();
   return (
     <div className="search-bar border border-gray-500 rounded px flex  items-center">
       <input
