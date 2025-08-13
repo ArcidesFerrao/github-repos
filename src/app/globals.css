@@ -108,6 +108,9 @@ button {
   transform: translate3d(4px, -2px, 0);
 }
 
+.languages-aside {
+  height: fit-content;
+}
 .repo-card,
 .languages-aside {
   background-color: var(--bg-div);
