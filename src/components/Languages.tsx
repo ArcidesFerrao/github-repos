@@ -1,8 +1,9 @@
+import { formatBytes } from "@/app/actions/formatBytes";
 import React, { useEffect, useState } from "react";
 
 type LanguageCount = {
   language: string;
-  count: number;
+  bytes: number;
 };
 
 type Repo = {
@@ -55,7 +56,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
       const sortedLanguages = Object.entries(languageCount)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
-        .map(([language, count]) => ({ language, count }));
+        .map(([language, bytes]) => ({ language, bytes }));
 
       setLanguages(sortedLanguages);
       setLoading(false);
@@ -79,7 +80,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
               className="language flex justify-between text-sm  py-1"
             >
               <span className="text-gray-400">{lang.language}</span>
-              <span className="text-gray-500">{lang.count}</span>
+              <span className="text-gray-500">{formatBytes(lang.bytes)}</span>
             </li>
           ))}
         </ul>
