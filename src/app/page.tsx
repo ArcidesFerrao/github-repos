@@ -1,30 +1,15 @@
 "use client";
 import { RepoCard } from "@/components/Card";
-import { TopLanguages } from "@/components/TopLanguages";
+import { Languages } from "@/components/Languages";
 // import { SearchBar } from "@/components/SearchBar";
 import { useSearch } from "@/context/SearchContext";
+import { RepoType } from "@/types";
 import { useEffect, useState } from "react";
-type LanguageStat = {
-  language: string;
-  count: number;
-};
-type Repo = {
-  id: number;
-  name: string;
-  description?: string;
-  html_url: string;
-  stargazers_count: number;
-  login?: string; // Optional user name
-  language?: string; // Optional language field
-  avatar?: string; // Optional user avatar URL
-  forks?: number; // Optional forks count
-};
 
 export default function Home() {
   const { search } = useSearch();
-  const [repos, setRepos] = useState<Repo[]>([]);
+  const [repos, setRepos] = useState<RepoType[]>([]);
   // const [search, setSearch] = useState("");
-  const [topLanguages, setTopLanguages] = useState<LanguageStat[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +18,6 @@ export default function Home() {
       .then((data) => {
         console.log("Fetched repos:", data.repos); // Add this line for debugging
         setRepos(data.repos);
-        setTopLanguages(data.topLanguages || []);
         setLoading(false);
       })
       .catch((err) => {
@@ -57,28 +41,13 @@ export default function Home() {
           <p className="text-gray-500">No repositories found.</p>
         ) : (
           <div className="flex flex-col gap-4">
-            {filteredRepos.map((repo: Repo) => (
+            {filteredRepos.map((repo: RepoType) => (
               <RepoCard key={repo.id} repo={repo} />
             ))}
           </div>
         )}
       </div>
-      <aside className="w-3xs max-h-fit p-4 mt-20 border rounded-sm border-gray-500">
-        <h2>Top 10 Languages</h2>
-        {loading ? (
-          <p className="text-gray-500 text-center py-2">Loading languages...</p>
-        ) : (
-          <ul className="p-2">
-            {topLanguages.map((lang) => (
-              <TopLanguages
-                key={lang.language}
-                language={lang.language}
-                count={lang.count}
-              />
-            ))}
-          </ul>
-        )}
-      </aside>
+      <Languages repos={repos} />
     </main>
   );
 }

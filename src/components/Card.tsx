@@ -1,17 +1,8 @@
 import React from "react";
 import Image from "next/image";
-interface Repo {
-  id: number;
-  name: string;
-  description?: string;
-  html_url: string;
-  stargazers_count: number;
-  login?: string; // Optional user name
-  language?: string; // Optional language field
-  avatar?: string; // Optional user avatar URL
-  forks?: number; // Optional forks count
-}
-export const RepoCard = ({ repo }: { repo: Repo }) => {
+import { RepoType } from "@/types";
+
+export const RepoCard = ({ repo }: { repo: RepoType }) => {
   return (
     <div
       key={repo.id}
@@ -32,15 +23,17 @@ export const RepoCard = ({ repo }: { repo: Repo }) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Image
-            src={repo.avatar || "/default-avatar.png"}
+            src={repo.owner.avatar_url || "/default-avatar.png"}
             className="rounded-full"
             width={24}
             height={24}
             alt="User Avatar"
           />
-          <h3 className="text-gray-400">{repo.login}</h3>
+          <h3 className="text-gray-400">{repo.owner.login}</h3>
         </div>
-        <span className="text-sm text-gray-500">Forks: {repo.forks || 0}</span>
+        <span className="text-sm text-gray-500">
+          Forks: {repo.forks_count || 0}
+        </span>
         <span className="text-sm text-gray-500">
           Stars: {repo.stargazers_count}
         </span>
