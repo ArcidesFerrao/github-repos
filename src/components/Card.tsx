@@ -14,12 +14,12 @@ export const RepoCard = ({ repo }: { repo: RepoType }) => {
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-200 text-xs flex items-center hover:underline"
+          className="text-blue-200 text-xs flex items-center"
         >
           <span className="lets-icons--view-light"></span>
         </a>
       </div>
-      <p className="text-sm text-gray-600">{repo.description}</p>
+      <p className="text-sm text-gray-600 line-clamp-3 ">{repo.description}</p>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Image
@@ -31,12 +31,14 @@ export const RepoCard = ({ repo }: { repo: RepoType }) => {
           />
           <h3 className="text-gray-400">{repo.owner.login}</h3>
         </div>
-        <span className="text-sm text-gray-500">
-          Forks: {repo.forks_count || 0}
-        </span>
-        <span className="text-sm text-gray-500">
-          Stars: {repo.stargazers_count}
-        </span>
+        <div className=" flex gap-1 items-center text-sm text-gray-500">
+          <p>{repo.forks_count || 0}</p>
+          <span className="iconoir--git-fork"></span>
+        </div>
+        <div className=" flex gap-1 items-center text-sm text-gray-500">
+          <p>{repo.stargazers_count}</p>
+          <span className="ic--round-star"></span>
+        </div>
       </div>
     </div>
   );

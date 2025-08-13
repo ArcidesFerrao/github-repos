@@ -8,8 +8,8 @@ import { useSearch } from "@/context/SearchContext";
 export default function Nav() {
   const { setCurrentPage } = useSearch();
   return (
-    <nav className="flex justify-between items-center p-4 ">
-      <div>
+    <nav className=" flex justify-between items-center p-4 ">
+      <div className="hide-mobile">
         <Link
           href="/"
           onClick={() => setCurrentPage(1)}

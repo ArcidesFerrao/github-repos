@@ -67,7 +67,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
   }, [repos]);
 
   return (
-    <aside className="w-3xs max-h-fit p-4 mt-20 border rounded-sm border-gray-500">
+    <aside className="hide-mobile w-3xs max-h-fit p-4 mt-14 border rounded-sm border-gray-500">
       <h2 className="text-center">Top 10 Languages</h2>
       {loading ? (
         <p className="text-gray-500 text-center py-2">Loading languages...</p>

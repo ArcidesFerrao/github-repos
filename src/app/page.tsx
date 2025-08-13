@@ -43,9 +43,9 @@ export default function Home() {
   }, [currentPage]);
 
   return (
-    <main className="font-sans flex gap-4 justify-evenly">
-      <div className="flex flex-col items-center gap-5 p-4">
-        <h1>Most Liked Repos List</h1>
+    <main className="font-sans flex gap-4 justify-around px-4">
+      <div className="flex flex-col items-center gap-4 py-4">
+        <p className="self-start">A list of the most starred repos</p>
         {loading ? (
           <p className="text-gray-500">Loading...</p>
         ) : filteredRepos.length === 0 ? (
