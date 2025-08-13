@@ -9,7 +9,13 @@ export const RepoCard = ({ repo }: { repo: RepoType }) => {
       className="repo-card flex flex-col gap-4 p-4 border border-gray-600 rounded-md shadow-sm"
     >
       <div className="header-card flex justify-between items-center">
-        <h2 className="text-lg font-bold text-gray-300">{repo.name}</h2>
+        {repo.homepage !== "" ? (
+          <a href={repo.homepage} target="_blank">
+            <h2 className="text-lg font-bold text-gray-300">{repo.name}</h2>
+          </a>
+        ) : (
+          <h2 className="text-lg font-bold text-gray-300">{repo.name}</h2>
+        )}
         <a
           href={repo.html_url}
           target="_blank"
@@ -34,6 +40,10 @@ export const RepoCard = ({ repo }: { repo: RepoType }) => {
         <div className=" flex gap-1 items-center text-sm text-gray-500">
           <p>{repo.forks_count || 0}</p>
           <span className="iconoir--git-fork"></span>
+        </div>
+        <div className=" flex gap-1 items-center text-sm text-gray-500">
+          <p>{repo.open_issues_count || 0}</p>
+          <span className="mdi--git-issue"></span>
         </div>
         <div className=" flex gap-1 items-center text-sm text-gray-500">
           <p>{repo.stargazers_count}</p>

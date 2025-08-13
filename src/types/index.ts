@@ -10,7 +10,8 @@ export type RepoType = {
             avatar_url: string; // User avatar URL
         };
         forks_count: number; // Forks count
+        open_issues_count: number; // Open issues count
         language?: string; // Optional language field
         languages_url: string; // Optional URL to fetch languages
-
+        homepage?: string; // Optional homepage URL
     };
