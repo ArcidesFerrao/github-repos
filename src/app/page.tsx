@@ -14,7 +14,7 @@ export default function Home() {
   const itemsPerPage = 15;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/repos`)
+    fetch(`/api/repos`)
       .then((res) => res.json())
       .then((data) => {
         // console.log("Fetched repos:", data.repos); // Add this line for debugging
