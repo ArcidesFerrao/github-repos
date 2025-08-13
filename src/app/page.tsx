@@ -36,6 +36,12 @@ export default function Home() {
   const currentRepos = filteredRepos.slice(indexOfFirstRepo, indexOfLastRepo);
   const totalPages = Math.ceil(filteredRepos.length / itemsPerPage);
 
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }, [currentPage]);
+
   return (
     <main className="font-sans flex gap-4 justify-evenly">
       <div className="flex flex-col items-center gap-5 p-4">
@@ -55,13 +61,17 @@ export default function Home() {
               {currentPage > 1 && (
                 <button
                   className="text-gray-400 text-sm"
-                  onClick={() => setCurrentPage(1)}
+                  onClick={() => {
+                    setCurrentPage(1);
+                  }}
                 >{`First Page`}</button>
               )}
               <button
                 className="text-gray-300 text-sm"
                 disabled={currentPage === 1}
-                onClick={() => setCurrentPage(currentPage - 1)}
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                }}
               >{`<< Prev`}</button>
               <span className="text-gray-400 text-sm">
                 Page {currentPage} of {totalPages}
@@ -74,7 +84,9 @@ export default function Home() {
               {currentPage !== totalPages && (
                 <button
                   className="text-gray-400 text-sm"
-                  onClick={() => setCurrentPage(totalPages)}
+                  onClick={() => {
+                    setCurrentPage(totalPages);
+                  }}
                 >{`Last Page`}</button>
               )}
             </div>
