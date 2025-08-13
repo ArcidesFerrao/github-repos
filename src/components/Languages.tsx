@@ -19,10 +19,10 @@ export const Languages = ({ repos }: LanguagesProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (repos.length === 0) {
-      setLanguages([]);
+    if (!repos.length) {
       return;
     }
+
     const fetchLanguages = async () => {
       setLoading(true);
 
@@ -68,7 +68,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
 
   return (
     <aside className="w-3xs max-h-fit p-4 mt-20 border rounded-sm border-gray-500">
-      <h2>Top 10 Languages</h2>
+      <h2 className="text-center">Top 10 Languages</h2>
       {loading ? (
         <p className="text-gray-500 text-center py-2">Loading languages...</p>
       ) : (
@@ -76,10 +76,10 @@ export const Languages = ({ repos }: LanguagesProps) => {
           {languages.map((lang) => (
             <li
               key={lang.language}
-              className="language flex justify-between text-sm text-gray-400 py-1"
+              className="language flex justify-between text-sm  py-1"
             >
-              <span>{lang.language}</span>
-              <span>{lang.count}</span>
+              <span className="text-gray-400">{lang.language}</span>
+              <span className="text-gray-500">{lang.count}</span>
             </li>
           ))}
         </ul>

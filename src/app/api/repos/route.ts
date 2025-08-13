@@ -7,7 +7,7 @@ export async function GET() {
         "User-Agent" : "moz-repo-finder",
     }
 
-    const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=100", {
+    const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=150", {
         headers,
     });
 
