@@ -7,6 +7,7 @@
   --background: #171717;
   --border-color: rgba(27, 27, 27, 0.3);
   --hover-color: rgba(100, 100, 100, 0.2);
+  --bg-div: rgba(48, 48, 48, 0.2);
 }
 /* 
 @theme inline {
@@ -98,9 +99,18 @@ button {
 .language {
   transition: all 0.3s ease-in-out;
 }
+.repo-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 .repo-card:hover,
 .language:hover {
   background-color: var(--hover-color);
+  transform: translate3d(4px, -2px, 0);
+}
+
+.repo-card,
+.languages-aside {
+  background-color: var(--bg-div);
 }
 
 .lets-icons--view-light {
