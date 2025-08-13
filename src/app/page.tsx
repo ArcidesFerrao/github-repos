@@ -42,6 +42,10 @@ export default function Home() {
     });
   }, [currentPage]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, setCurrentPage]);
+
   return (
     <main className="font-sans flex gap-4 justify-around px-4">
       <div className="flex flex-col items-center gap-4 py-4">

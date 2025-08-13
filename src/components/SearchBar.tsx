@@ -2,11 +2,6 @@
 import { useSearch } from "@/context/SearchContext";
 import React from "react";
 
-// type SearchBarProps = {
-//   search: string;
-//   setSearch: (search: string) => void;
-// };
-
 export const SearchBar = () => {
   const { search, setSearch } = useSearch();
   return (
