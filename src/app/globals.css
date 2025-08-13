@@ -86,7 +86,7 @@ button {
 } */
 
 .header-card a:hover {
-  color: var(--hover-color);
+  transform: translateY(-3px);
 }
 .language {
   min-width: 180px;
@@ -95,6 +95,8 @@ button {
 .repo-card {
   max-width: 500px;
 }
+
+.header-card a,
 .repo-card,
 .language {
   transition: all 0.3s ease-in-out;

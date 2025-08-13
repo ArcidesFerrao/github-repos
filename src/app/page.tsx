@@ -93,7 +93,11 @@ export default function Home() {
           </>
         )}
       </div>
-      <Languages repos={filteredRepos} />
+      {repos && repos.length > 0 ? (
+        <Languages repos={filteredRepos} />
+      ) : (
+        <Languages repos={[]} />
+      )}
     </main>
   );
 }

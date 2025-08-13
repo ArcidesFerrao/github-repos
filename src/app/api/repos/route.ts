@@ -18,8 +18,7 @@ export async function GET() {
     }
 
     try {
-
-        const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=150", {
+        const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=200", {
             headers,
             next: { revalidate: CACHE_DURATION * 60 }, 
         });
@@ -31,7 +30,7 @@ export async function GET() {
         }
 
         const reposPromises = data.items.map((user: { repos_url: string; login: string }) => 
-            fetch(user.repos_url, { headers })
+            fetch(user.repos_url + "?per_page=200", { headers })
                 .then(res => res.json())
                 .catch(err => {
                     console.error(`Failed to fetch repos for user ${user.login}:`, err);
@@ -39,37 +38,23 @@ export async function GET() {
                 })
         )
 
-    const reposData = await Promise.all(reposPromises);
+        const reposData = await Promise.all(reposPromises);
 
-    const allRepos = reposData.flat().filter((repo: RepoType) => repo.stargazers_count > 4);
+        const allRepos = reposData.flat().filter((repo: RepoType) => repo.stargazers_count > 4);
     
-    // let repos: RepoType[] = [];
-    
-    // for (const user of data.items) {
-    //     const reposResponse = await fetch(user.repos_url + "?per_page=100", { headers });
-    //     const userRepos = await reposResponse.json();
+        if (allRepos.length === 0) {
+            return NextResponse.json({ repos: [] });
+        }
         
-    //     if (Array.isArray(userRepos)) {
-    //         repos = repos.concat(
-    //             userRepos.map((repo: RepoType) => ({
-    //                 ...repo,
-    //                 login: repo.owner.login,
-    //                 avatar: repo.owner.avatar_url,
-    //             }))
-    //         );
-    //     } 
-    // }
-    
-    // repos = repos.filter((repo) => repo.stargazers_count > 4); // Filter out repos with no stars
-    // console.log(repos[0]);
-    // console.log(repos.length);
-    
-    allRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
-    cachedRepos = allRepos;
-    lastFetchTime = Date.now();
-    return NextResponse.json({ allRepos });
-} catch (error) {
-        console.error("Failed to fetch repos:", error);
-        return NextResponse.json({ error: "Failed to fetch repositories" }, { status: 500 });
+        allRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+        cachedRepos = allRepos;
+        lastFetchTime = Date.now();
+
+        return NextResponse.json({ repos: allRepos });
+
+    } catch (error) {
+            console.error("Failed to fetch repos:", error);
+            
+            return NextResponse.json({ repos: [], error: "Failed to fetch repositories" }, { status: 500 });
     }
 }
