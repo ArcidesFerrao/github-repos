@@ -88,12 +88,13 @@ button {
 .header-card a:hover {
   transform: translateY(-3px);
 }
+
 .language {
   min-width: 180px;
 }
 
 .skeleton {
-  width: 400px;
+  width: 500px;
   border-radius: 0.4rem;
   border-color: var(--hover-color);
   background-color: var(--bg-div);

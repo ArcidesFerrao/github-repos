@@ -1,5 +1,6 @@
 import { formatBytes } from "@/app/actions/formatBytes";
 import React, { useEffect, useState } from "react";
+import { SkeletonLanguages } from "./Skeleton";
 
 type LanguageCount = {
   language: string;
@@ -71,7 +72,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
     <aside className="languages-aside hide-mobile w-3xs p-4 mt-14 border rounded-sm border-gray-700">
       <h2 className="text-center">Top 10 Languages</h2>
       {loading ? (
-        <p className="text-gray-500 text-center py-2">Loading languages...</p>
+        <SkeletonLanguages />
       ) : (
         <ul className="p-2">
           {languages.map((lang) => (

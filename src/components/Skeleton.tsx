@@ -14,7 +14,6 @@ export const Skeleton = () => {
 
       <div className="my-4 space-y-2 w-full">
         <div className="h-3 w-full bg-gray-700 rounded" />
-        <div className="h-3 w-11/12 bg-gray-700 rounded" />
         <div className="h-3 w-9/12 bg-gray-700 rounded" />
       </div>
 
@@ -36,3 +35,17 @@ export function SkeletonList() {
     </div>
   );
 }
+
+export const SkeletonLanguages = () => {
+  return (
+    <div
+      className="flex flex-col gap-2 p-2 animate-pulse"
+      aria-busy="true"
+      aria-live="polite"
+    >
+      {Array.from({ length: 10 }).map((_, index) => (
+        <div key={index} className="h-5 w-full bg-gray-700" />
+      ))}
+    </div>
+  );
+};
