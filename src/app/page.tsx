@@ -16,6 +16,7 @@ export default function Home() {
   const itemsPerPage = 15;
 
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/repos?sort=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {

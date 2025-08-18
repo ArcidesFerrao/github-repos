@@ -195,10 +195,10 @@ button {
   font-weight: lighter;
 }
 
-.radio-group input[type="radio"]:checked + label {
-  background: var(--foreground);
-  color: var(--background);
-  border-color: #888;
+.radio-group label:has(input[type="radio"]:checked) {
+  background: var(--hover-color);
+  color: var(--foreground);
+  border-color: var(--foreground);
 }
 
 .radio-group label:hover {
