@@ -10,12 +10,13 @@ export default function Home() {
   const { search, currentPage, setCurrentPage } = useSearch();
   const [repos, setRepos] = useState<RepoType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState<"stars" | "forks" | "updated">("stars");
 
   // const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
 
   useEffect(() => {
-    fetch(`/api/repos`)
+    fetch(`/api/repos?sort=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log("Fetched repos:", data.repos); // Add this line for debugging
@@ -26,7 +27,7 @@ export default function Home() {
         console.error("Failed to fetch repos:", err);
         setLoading(false);
       });
-  }, []);
+  }, [sortBy]);
 
   const filteredRepos = repos.filter((repo) =>
     repo.name.toLowerCase().includes(search.toLowerCase())
@@ -98,11 +99,54 @@ export default function Home() {
           </>
         )}
       </div>
-      {repos && repos.length > 0 ? (
-        <Languages repos={filteredRepos} />
-      ) : (
-        <Languages repos={[]} />
-      )}
+      <div className="flex flex-col gap-4 py-4">
+        <div className="radio-group flex gap-4">
+          <label className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="sort"
+              value="stars"
+              checked={sortBy === "stars"}
+              onChange={(e) =>
+                setSortBy(e.target.value as "stars" | "forks" | "updated")
+              }
+              className="accent-gray-600"
+            />
+            Stars
+          </label>
+          <label className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="sort"
+              value="forks"
+              checked={sortBy === "forks"}
+              onChange={(e) =>
+                setSortBy(e.target.value as "stars" | "forks" | "updated")
+              }
+              className="accent-gray-600"
+            />
+            Forks
+          </label>
+          <label className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="sort"
+              value="updated"
+              checked={sortBy === "updated"}
+              onChange={(e) =>
+                setSortBy(e.target.value as "stars" | "forks" | "updated")
+              }
+              className="accent-gray-600"
+            />
+            Updated
+          </label>
+        </div>
+        {repos && repos.length > 0 ? (
+          <Languages repos={filteredRepos} />
+        ) : (
+          <Languages repos={[]} />
+        )}
+      </div>
     </main>
   );
 }

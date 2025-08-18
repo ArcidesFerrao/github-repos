@@ -6,10 +6,12 @@ let lastFetchTime = 0;
 
 const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const sortBy = searchParams.get("sort") || "stars";
 
     if (cachedRepos && (Date.now() - lastFetchTime < CACHE_DURATION)) {
-        return NextResponse.json({ repos: cachedRepos });
+        return NextResponse.json({ repos: sortRepos(cachedRepos, sortBy) });
     }
 
     const headers = {
@@ -57,4 +59,17 @@ export async function GET() {
             
             return NextResponse.json({ repos: [], error: "Failed to fetch repositories" }, { status: 500 });
     }
+}
+
+
+function sortRepos(repos: RepoType[], sortBy: string) {
+    if ( sortBy === "forks") {
+        return repos.sort((a, b) => b.forks_count - a.forks_count);
+    }
+
+    if (sortBy === "updated") {
+        return repos.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+    }
+
+    return repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
 }

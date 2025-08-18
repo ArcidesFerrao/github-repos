@@ -14,4 +14,6 @@ export type RepoType = {
         language?: string; // Optional language field
         languages_url: string; // Optional URL to fetch languages
         homepage?: string; // Optional homepage URL
+        updated_at: string; // Last updated date
+        created_at: string; // Creation date
     };
