@@ -52,7 +52,52 @@ export default function Home() {
   return (
     <main className="font-sans flex gap-4 justify-around px-4">
       <div className="flex flex-col items-center gap-4 py-4">
-        <p className="self-start">A list of the most starred repos</p>
+        <div className="flex justify-between w-full">
+          <p className="self-start font-light">
+            A list of the most starred repos
+          </p>
+          <div className="radio-group flex gap-4">
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                name="sort"
+                value="stars"
+                checked={sortBy === "stars"}
+                onChange={(e) =>
+                  setSortBy(e.target.value as "stars" | "forks" | "updated")
+                }
+                className="accent-gray-600"
+              />
+              Stars
+            </label>
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                name="sort"
+                value="forks"
+                checked={sortBy === "forks"}
+                onChange={(e) =>
+                  setSortBy(e.target.value as "stars" | "forks" | "updated")
+                }
+                className="accent-gray-600"
+              />
+              Forks
+            </label>
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                name="sort"
+                value="updated"
+                checked={sortBy === "updated"}
+                onChange={(e) =>
+                  setSortBy(e.target.value as "stars" | "forks" | "updated")
+                }
+                className="accent-gray-600"
+              />
+              Updated
+            </label>
+          </div>
+        </div>
         {loading ? (
           <SkeletonList />
         ) : filteredRepos.length === 0 ? (
@@ -100,54 +145,12 @@ export default function Home() {
           </>
         )}
       </div>
-      <div className="flex flex-col gap-4 py-4">
-        <div className="radio-group flex gap-4">
-          <label className="flex items-center gap-1">
-            <input
-              type="radio"
-              name="sort"
-              value="stars"
-              checked={sortBy === "stars"}
-              onChange={(e) =>
-                setSortBy(e.target.value as "stars" | "forks" | "updated")
-              }
-              className="accent-gray-600"
-            />
-            Stars
-          </label>
-          <label className="flex items-center gap-1">
-            <input
-              type="radio"
-              name="sort"
-              value="forks"
-              checked={sortBy === "forks"}
-              onChange={(e) =>
-                setSortBy(e.target.value as "stars" | "forks" | "updated")
-              }
-              className="accent-gray-600"
-            />
-            Forks
-          </label>
-          <label className="flex items-center gap-1">
-            <input
-              type="radio"
-              name="sort"
-              value="updated"
-              checked={sortBy === "updated"}
-              onChange={(e) =>
-                setSortBy(e.target.value as "stars" | "forks" | "updated")
-              }
-              className="accent-gray-600"
-            />
-            Updated
-          </label>
-        </div>
-        {repos && repos.length > 0 ? (
-          <Languages repos={filteredRepos} />
-        ) : (
-          <Languages repos={[]} />
-        )}
-      </div>
+
+      {repos && repos.length > 0 ? (
+        <Languages repos={filteredRepos} />
+      ) : (
+        <Languages repos={[]} />
+      )}
     </main>
   );
 }

@@ -23,6 +23,11 @@
     padding: 1rem 2.5rem;
   }
 }
+@media (max-width: 500px) {
+  .skeleton {
+    width: 100%;
+  }
+}
 @media (max-width: 700px) {
   .hide-mobile {
     display: none;
