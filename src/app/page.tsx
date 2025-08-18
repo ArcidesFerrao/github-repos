@@ -1,6 +1,7 @@
 "use client";
 import { RepoCard } from "@/components/Card";
 import { Languages } from "@/components/Languages";
+import { SkeletonList } from "@/components/Skeleton";
 import { useSearch } from "@/context/SearchContext";
 import { RepoType } from "@/types";
 import { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ export default function Home() {
       <div className="flex flex-col items-center gap-4 py-4">
         <p className="self-start">A list of the most starred repos</p>
         {loading ? (
-          <p className="text-gray-500">Loading...</p>
+          <SkeletonList />
         ) : filteredRepos.length === 0 ? (
           <p className="text-gray-500">No repositories found.</p>
         ) : (

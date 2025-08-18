@@ -92,6 +92,12 @@ button {
   min-width: 180px;
 }
 
+.skeleton {
+  width: 400px;
+  border-radius: 0.4rem;
+  border-color: var(--hover-color);
+  background-color: var(--bg-div);
+}
 .repo-card {
   max-width: 500px;
 }
@@ -101,13 +107,14 @@ button {
 .language {
   transition: all 0.3s ease-in-out;
 }
+
 .repo-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: -5px 9px 1px rgba(81, 81, 81, 0.2);
 }
 .repo-card:hover,
 .language:hover {
   background-color: var(--hover-color);
-  transform: translate3d(4px, -2px, 0);
+  transform: translate3d(5px, -2px, 0);
 }
 
 .languages-aside {
