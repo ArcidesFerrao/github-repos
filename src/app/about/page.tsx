@@ -19,6 +19,7 @@ export default function AboutPage() {
         <section className="rounded-md p-6 border-gray-600 border">
           <h2 className="text-2xl font-semibold text-gray-200 mb-4 flex items-center gap-2">
             {/* <Github className="w-6 h-6" /> */}
+            <span className="line-md--github-loop"></span>
             What is Repo Explorer?
           </h2>
           <p className="text-gray-200 leading-relaxed">
@@ -36,8 +37,9 @@ export default function AboutPage() {
             Key Features
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex gap-4 p-4 border-gray-600 border rounded-lg hover:shadow-md transition-shadow">
+            <div className="flex  gap-4 p-4 border-gray-600 border rounded-lg hover:shadow-md transition-shadow">
               {/* <Star className="w-8 h-8 text-yellow-500 flex-shrink-0 mt-1" /> */}
+              <span className="line-md--star-filled"></span>
               <div>
                 <h3 className="font-semibold text-gray-200 mb-2">
                   Star-Based Sorting
@@ -51,6 +53,7 @@ export default function AboutPage() {
 
             <div className="flex gap-4 p-4 border-gray-600 border rounded-lg hover:shadow-md transition-shadow">
               {/* <GitFork className="w-8 h-8 text-blue-500 flex-shrink-0 mt-1" /> */}
+              <span className="fa--code-fork"></span>
               <div>
                 <h3 className="font-semibold text-gray-200 mb-2">
                   Fork Analysis
@@ -64,6 +67,7 @@ export default function AboutPage() {
 
             <div className="flex gap-4 p-4 border-gray-600 border rounded-lg hover:shadow-md transition-shadow">
               {/* <Clock className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" /> */}
+              <span className="tabler--clock-filled"></span>
               <div>
                 <h3 className="font-semibold text-gray-200 mb-2">
                   Recently Updated
@@ -77,6 +81,7 @@ export default function AboutPage() {
 
             <div className="flex gap-4 p-4 border-gray-600 border rounded-lg hover:shadow-md transition-shadow">
               {/* <Search className="w-8 h-8 text-purple-500 flex-shrink-0 mt-1" /> */}
+              <span className="line-md--search-filled"></span>
               <div>
                 <h3 className="font-semibent text-gray-200 mb-2">
                   Smart Search
@@ -90,6 +95,7 @@ export default function AboutPage() {
 
             <div className="flex gap-4 p-4 border-gray-600 border rounded-lg hover:shadow-md transition-shadow">
               {/* <BarChart3 className="w-8 h-8 text-red-500 flex-shrink-0 mt-1" /> */}
+              <span className="tdesign--chart"></span>
               <div>
                 <h3 className="font-semibold text-gray-200 mb-2">
                   Language Analytics

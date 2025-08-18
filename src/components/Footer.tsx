@@ -7,7 +7,7 @@ export const Footer = () => {
       <span>2025</span>
       <span className="text-gray-500">©</span>
       <Link href="/about" className="text-gray-500 hover:text-gray-100">
-        Moz Repo Finder
+        Moz Repo Explorer
       </Link>
     </footer>
   );
