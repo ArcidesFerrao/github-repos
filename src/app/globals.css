@@ -5,6 +5,7 @@
   /* --foreground: #171717; */
   --foreground: #f4f5fa;
   --background: #171717;
+  --border: #4a5565;
   --border-color: rgba(27, 27, 27, 0.3);
   --hover-color: rgba(100, 100, 100, 0.2);
   --bg-div: rgba(48, 48, 48, 0.2);
@@ -184,7 +185,7 @@ button {
 
 .radio-group label {
   padding: 0.2rem 0.4rem;
-  border: 1px solid var(--foreground);
+  border: 1px solid var(--border);
   border-radius: 4px;
   background: var(--background);
   color: var(--foreground);

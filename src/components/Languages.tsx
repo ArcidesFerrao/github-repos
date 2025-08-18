@@ -69,7 +69,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
   }, [repos]);
 
   return (
-    <aside className="languages-aside hide-mobile w-3xs p-4 border rounded-sm border-gray-700">
+    <aside className="languages-aside hide-mobile w-3xs p-4 border rounded-sm border-gray-600">
       <h2 className="text-center">Top 10 Languages</h2>
       {loading ? (
         <SkeletonLanguages />
