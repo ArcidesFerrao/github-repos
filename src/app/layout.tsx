@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { SearchProvider } from "@/context/SearchContext";
+import { Footer } from "@/components/Footer";
 
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
         <SearchProvider>
           <Nav />
           {children}
+          <Footer />
         </SearchProvider>
       </body>
     </html>
