@@ -6,7 +6,7 @@ export const RepoCard = ({ repo }: { repo: RepoType }) => {
   return (
     <div
       key={repo.id}
-      className="repo-card flex flex-col gap-4 p-4 border border-gray-600 rounded-md shadow-sm"
+      className="repo-card flex flex-col gap-3 p-4 border border-gray-600 rounded-md shadow-sm"
     >
       <div className="header-card flex justify-between items-center">
         {repo.homepage !== "" ? (
@@ -16,14 +16,21 @@ export const RepoCard = ({ repo }: { repo: RepoType }) => {
         ) : (
           <h2 className="text-lg font-bold text-gray-300">{repo.name}</h2>
         )}
-        <a
-          href={repo.html_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-200 text-xs flex items-center"
-        >
-          <span className="lets-icons--view-light"></span>
-        </a>
+        <div className="flex flex-col  items-end">
+          <a
+            href={repo.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-200 text-xs flex items-center"
+          >
+            <span className="lets-icons--view-light"></span>
+          </a>
+
+          <div className="updated-time flex gap-1 text-xs text-gray-500">
+            <p>updated at</p>
+            <p>{new Date(repo.updated_at).toLocaleDateString()}</p>
+          </div>
+        </div>
       </div>
       <p className="text-sm text-gray-600 line-clamp-3 ">{repo.description}</p>
       <div className="flex justify-between items-center">
