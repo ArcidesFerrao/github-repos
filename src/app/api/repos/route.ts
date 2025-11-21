@@ -15,12 +15,13 @@ export async function GET(request: Request) {
     }
 
     const headers = {
-        Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         "User-Agent" : "moz-repo-finder",
+        Accept: "application/vnd.github+json"
     }
 
     try {
-        const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=200", {
+        const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=100", {
             headers,
             next: { revalidate: CACHE_DURATION * 60 }, 
         });
@@ -28,6 +29,7 @@ export async function GET(request: Request) {
         const data = await response.json();
         
         if (!data || !data.items) {
+            console.error("Invalid data structure from GitHub API:", data);
             throw new Error("Could not fetch users");
         }
 

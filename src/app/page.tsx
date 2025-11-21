@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <main className="font-sans flex gap-4 justify-around px-4">
       <div className="flex flex-col items-center gap-4 py-4">
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between gap-4 w-full">
           <p className="self-start font-light">
             A list of the most starred repos
           </p>
