@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 let cachedRepos: RepoType[] | null = null;
 let lastFetchTime = 0;
 
-const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
+const CACHE_DURATION = 1000 * 60 * 60 * 24; // 24 hour
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
     try {
         const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=100", {
             headers,
-            next: { revalidate: CACHE_DURATION * 60 }, 
+            next: { revalidate: 60 * 60 * 24 }, 
         });
         
         const data = await response.json();
