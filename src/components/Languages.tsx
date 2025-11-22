@@ -35,6 +35,7 @@ export const Languages = ({ repos }: LanguagesProps) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ repos }),
+          next: { revalidate: 3600 },
         });
 
         const data = await response.json();
