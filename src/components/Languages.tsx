@@ -28,44 +28,25 @@ export const Languages = ({ repos }: LanguagesProps) => {
     const fetchLanguages = async () => {
       setLoading(true);
 
-      const headers = {
-        Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-        "User-Agent": "moz-repo-finder",
-      };
+      try {
+        const response = await fetch("api/languages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ repos }),
+        });
 
-      const languageCount: Record<string, number> = {};
-
-      await Promise.all(
-        repos.map(async (repo) => {
-          try {
-            const response = await fetch(repo.languages_url, { headers });
-            const data = await response.json();
-
-            for (const [lang, bytes] of Object.entries(data)) {
-              languageCount[lang] =
-                (languageCount[lang] || 0) + (bytes as number);
-            }
-          } catch (error) {
-            console.error(
-              `Failed to fetch languages for repo ${repo.id}:`,
-              error
-            );
-          }
-        })
-      );
-
-      const sortedLanguages = Object.entries(languageCount)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
-        .map(([language, bytes]) => ({ language, bytes }));
-
-      setLanguages(sortedLanguages);
-      setLoading(false);
+        const data = await response.json();
+        setLanguages(data.languages);
+      } catch (error) {
+        console.error("Failed to fetch languages:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    if (repos.length > 0) {
-      fetchLanguages();
-    }
+    fetchLanguages();
   }, [repos]);
 
   return (

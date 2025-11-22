@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     }
 
     try {
-        const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=100", {
+        const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=200", {
             headers,
             next: { revalidate: 60 * 60 * 24 }, 
         });

@@ -4,7 +4,7 @@ import { Languages } from "@/components/Languages";
 import { SkeletonList } from "@/components/Skeleton";
 import { useSearch } from "@/context/SearchContext";
 import { RepoType } from "@/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const { search, currentPage, setCurrentPage } = useSearch();
@@ -12,25 +12,39 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<"stars" | "forks" | "updated">("stars");
 
-  // const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/repos?sort=${sortBy}`)
+    // fetch(`/api/repos?sort=${sortBy}`)
+    fetch(`/api/repos`)
       .then((res) => res.json())
       .then((data) => {
-        // console.log("Fetched repos:", data.repos); // Add this line for debugging
         setRepos(data.repos);
         setLoading(false);
       })
       .catch((err) => {
         console.error("Failed to fetch repos:", err);
+      })
+      .finally(() => {
         setLoading(false);
       });
-  }, [sortBy]);
+  }, []);
 
-  const filteredRepos = repos.filter((repo) =>
+  const sortedRepos = useMemo(() => {
+    const sorted = [...repos];
+
+    const sortFunctions: Record<string, (a: RepoType, b: RepoType) => number> =
+      {
+        stars: (a, b) => b.stargazers_count - a.stargazers_count,
+        forks: (a, b) => b.forks_count - a.forks_count,
+        updated: (a, b) =>
+          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+      };
+    return sorted.sort(sortFunctions[sortBy]);
+  }, [repos, sortBy]);
+
+  const filteredRepos = sortedRepos.filter((repo) =>
     repo.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -147,7 +161,7 @@ export default function Home() {
       </div>
 
       {repos && repos.length > 0 ? (
-        <Languages repos={filteredRepos} />
+        <Languages repos={repos} />
       ) : (
         <Languages repos={[]} />
       )}
