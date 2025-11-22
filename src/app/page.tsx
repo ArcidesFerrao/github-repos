@@ -16,7 +16,6 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    // fetch(`/api/repos?sort=${sortBy}`)
     fetch(`/api/repos`)
       .then((res) => res.json())
       .then((data) => {
@@ -64,7 +63,7 @@ export default function Home() {
   }, [search, setCurrentPage]);
 
   return (
-    <main className="font-sans flex gap-4 justify-around px-4">
+    <main className=" flex gap-4 justify-around px-4">
       <div className="flex flex-col items-center gap-4 py-4">
         <div className="flex justify-between gap-4 w-full">
           <p className="self-start font-light">
