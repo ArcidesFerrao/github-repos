@@ -16,10 +16,11 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/repos`)
+    fetch(`/api/repos?sort=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {
         setRepos(data.repos);
+        console.log("Fetched repos:", data.repos);
         setLoading(false);
       })
       .catch((err) => {
@@ -44,7 +45,7 @@ export default function Home() {
   }, [repos, sortBy]);
 
   const filteredRepos = sortedRepos.filter((repo) =>
-    repo.name.toLowerCase().includes(search.toLowerCase())
+    repo.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const indexOfLastRepo = currentPage * itemsPerPage;

@@ -10,40 +10,63 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const sortBy = searchParams.get("sort") || "stars";
 
-    if (cachedRepos && (Date.now() - lastFetchTime < CACHE_DURATION)) {
-        return NextResponse.json({ repos: sortRepos(cachedRepos, sortBy) });
-    }
+    // if (cachedRepos && (Date.now() - lastFetchTime < CACHE_DURATION)) {
+    //     return NextResponse.json({ repos: sortRepos(cachedRepos, sortBy) });
+    // }
 
     const headers = {
         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         "User-Agent" : "moz-repo-finder",
         Accept: "application/vnd.github+json"
     }
-
     try {
         const response = await fetch("https://api.github.com/search/users?q=location:Mozambique&per_page=200", {
             headers,
-            next: { revalidate: 60 * 60 * 24 }, 
+            // next: { revalidate: 60 * 60 * 24 }, 
         });
         
         const data = await response.json();
+        // console.log("Fetched data from GitHub API:", data);
         
         if (!data || !data.items) {
             console.error("Invalid data structure from GitHub API:", data);
             throw new Error("Could not fetch users");
         }
+// console.log('Authorization header:', headers.Authorization);
+        const reposPromises = data.items.map(async (user: { repos_url: string; login: string }) => 
+            {
+            //        console.log(`Fetching repos for user: ${user.login} from URL: ${user.repos_url} bearer: ${headers.Authorization}`)
+            // fetch(user.repos_url, { headers })
+            // fetch(user.repos_url , { headers })
+            //     .then(res => res.json())
+            //     .catch(err => {
+            //         console.error(`Failed to fetch repos for user ${user.login}:`, err);
+            //         return [];
+            //     })
+            
+            const res = await fetch(user.repos_url, { headers });
 
-        const reposPromises = data.items.map((user: { repos_url: string; login: string }) => 
-            fetch(user.repos_url + "?per_page=200", { headers })
-                .then(res => res.json())
-                .catch(err => {
-                    console.error(`Failed to fetch repos for user ${user.login}:`, err);
-                    return [];
-                })
+    if (!res.ok) {
+        const body = await res.text();
+
+        console.error({
+            user: user.login,
+            url: user.repos_url,
+            status: res.status,
+            body,
+        });
+
+        return [];
+    }
+
+    return res.json();
+        }
+
         )
+        // console.log("Created promises for fetching repos of all users:", reposPromises);
 
         const reposData = await Promise.all(reposPromises);
-
+// console.log("Fetched repos data for all users:", reposData);
         const allRepos = reposData.flat().filter((repo: RepoType) => repo.stargazers_count > 4);
     
         if (allRepos.length === 0) {
@@ -53,7 +76,7 @@ export async function GET(request: Request) {
         allRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
         cachedRepos = allRepos;
         lastFetchTime = Date.now();
-
+// console.log("Sorted and filtered repos:", allRepos);
         return NextResponse.json({ repos: allRepos });
 
     } catch (error) {
